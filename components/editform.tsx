@@ -15,13 +15,13 @@ export default function EditForm({ school }: { school: any }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch(`/school/edit/${school.id}`, {
+    const res = await fetch(`/admin/school/edit/${school.id}`, {
       method: "PUT",
       body: JSON.stringify(form),
     });
 
     if (res.ok) {
-      router.push("/schoollisting");
+      router.push("/admin/schoollisting");
     } else {
       alert("Failed to update school.");
     }

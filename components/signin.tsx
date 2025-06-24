@@ -120,7 +120,7 @@
 "use client";
 
 
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { Card } from "@/ui/src/card";
 import { TextInput } from "@/ui/src/TextInput";
 import { Select } from "@/ui/src/Select";
@@ -153,11 +153,24 @@ export default function SignIn() {
       role,
     });
 
+
     if (result?.error) {
-      setError("Invalid credentials");
+    setError("Invalid credentials");
+  } else {
+    const session = await getSession();
+    const role = session?.user?.role;
+
+    if (role === "admin") {
+      window.location.href = "/admin";
+    } else if (role === "student") {
+      window.location.href = "/student";
+    } else if (role === "teacher") {
+      window.location.href = "/teacher";
     } else {
       window.location.href = "/";
     }
+  }
+
   };
 
   const roleOptions = [
@@ -193,7 +206,7 @@ export default function SignIn() {
           <h2 className="text-lg font-semibold">Learning Management System</h2>
           <p>🍪 Cookies must be enabled in your browser</p>
           <p className="font-semibold">Is this your first time here?</p>
-          <p>yo yo yo bitch</p>
+          <p>Welcome</p>
           <p>Stay Safe and Stay Healthy,</p>
         </div>
 

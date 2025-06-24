@@ -7,14 +7,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// model User {
+//   id       String   @id @default(cuid())
+//   email    String   @unique
+//   name     String?
+//   token    String?
+//   password String
+//   role     String   @default("student")
+//   schools  School[] @relation("UserCreatedSchools")
+// }
+
+
+// model School {
+//   id        String   @id @default(cuid())
+//   name      String
+//   address   String
+//   city      String
+//   state     String
+//   pincode   String
+//   refNumber String
+//   createdAt DateTime @default(now())
+//   createdBy String   @default("admin")
+//   creator   User     @relation("UserCreatedSchools", fields: [createdBy], references: [id])
+// }
+
+
+
 model User {
-  id       String   @id @default(cuid())
-  email    String   @unique
+  id       String  @id @default(cuid())
+  email    String  @unique
   name     String?
   token    String?
   password String
-  role     String   @default("student")
-  schools  School[] @relation("UserCreatedSchools")
+  role     String  @default("student")
+  school   School? @relation("UserSchool") // ✅ 1-to-1 relation
 }
 
 model School {
@@ -26,6 +52,16 @@ model School {
   pincode   String
   refNumber String
   createdAt DateTime @default(now())
-  createdBy String   @default("admin")
-  creator   User     @relation("UserCreatedSchools", fields: [createdBy], references: [id])
+  createdBy String   @unique              // ✅ Ensure 1-to-1
+  creator   User     @relation("UserSchool", fields: [createdBy], references: [id])
 }
+
+
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  email     String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
+

@@ -16,7 +16,7 @@ export default function SchoolListingClient({ schools, userId }: { schools: any[
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-3xl font-bold text-gray-800">Registered Schools</h1>
           <Link
-            href="/schoolregistration"
+            href="/admin/schoolregistration"
             className="bg-black text-white px-5 py-2 rounded hover:bg-gray-900"
           >
             + Add New
@@ -50,7 +50,7 @@ export default function SchoolListingClient({ schools, userId }: { schools: any[
               {/* 🔒 Only show Edit button if createdBy matches */}
               {school.createdBy === userId && (
                 <Link
-                  href={`/schooledit/edit/${school.id}`}
+                  href={`/admin/schooledit/edit/${school.id}`}
                   className="inline-block mt-3 text-sm bg-black text-white px-4 py-1.5 rounded hover:bg-gray-800"
                 >
                   Edit

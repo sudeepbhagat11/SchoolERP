@@ -9,7 +9,7 @@ export default async function EditSchoolPage({ params }: { params: { id: string 
   const session = await getServerSession(authOptions);
 
   if (!session || session.user.role !== "admin") {
-    redirect("/schoollisting");
+    redirect("/admin/schoollisting");
   }
 
   const school = await db.school.findUnique({

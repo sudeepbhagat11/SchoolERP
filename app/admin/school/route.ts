@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import {authOptions} from "@/app/lib/auth"
+import { authOptions } from "@/app/lib/auth"
 import db from "@/db";
 import { NextResponse } from "next/server";
 
@@ -13,6 +13,15 @@ export async function POST(req: Request) {
   }
   try {
     const body = await req.json();
+
+    const existingSchool = await db.school.findUnique({
+      where: { createdBy: userId }
+    });
+
+    if (existingSchool) {
+      return NextResponse.json({ message: "User already registered a school" }, { status: 400 });
+    }
+
 
     const newSchool = await db.school.create({
       data: {

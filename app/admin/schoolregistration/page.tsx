@@ -22,13 +22,16 @@ export default function SchoolRegistration() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch("/school", {
+    const res = await fetch("/admin/school", {
       method: "POST",
       body: JSON.stringify(form),
     });
 
     if (res.ok) {
-      router.push("/schoollisting");
+      router.push("/admin/schoollisting");
+    }
+    else if(res.status == 400){
+      alert("User already registered a school.");
     } else {
       alert("Failed to register school.");
     }
